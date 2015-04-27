@@ -1,0 +1,4 @@
+UBOOT_DIR=/boot/uboot # Added by odroid-xu3-uboot
+UBOOT_IMGADDR=0x40008000 # Added by odroid-xu3-uboot
+SHIPSDTB=yes # Added by odroid-xu3-uboot
+dtbfile=exynos5422-odroidxu3.dtb # Added by odroid-xu3-uboot
