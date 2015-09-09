@@ -2,7 +2,7 @@
 
 Name:           odroid-xu3-uboot
 Version:        2015.02.11
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        U-boot for ODROID-XU3
 
 Group:          System Environment/Base
@@ -61,5 +61,8 @@ done < %{_datadir}/%{name}/grubby-%{version}-%{release}
 /boot/uboot/u-boot.bin
 
 %changelog
+* Wed Sep 09 2015 Scott K Logan <logans@cottsay.net> - 2015.02.11-2
+- Update grubby config and boot.ini to store kerneland image in /boot
+
 * Thu Apr 09 2015 Scott K Logan <logans@cottsay.net> - 2015.02.11-1
 - Initial package
