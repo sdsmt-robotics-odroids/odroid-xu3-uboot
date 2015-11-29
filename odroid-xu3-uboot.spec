@@ -11,6 +11,11 @@ URL:            http://odroid.com/dokuwiki/doku.php?id=en:odroid-xu3
 Source0:        https://github.com/hardkernel/u-boot/archive/%{commit}/u-boot-%{commit}.tar.gz
 Source1:        boot.ini
 Source2:        grubby
+Patch0:         %{name}-2015.02.11-smc.patch
+Patch1:         %{name}-2015.02.11-gcc5.patch
+Patch2:         %{name}-2015.02.11-arm-asm-io-h-use-static-inline.patch
+Patch3:         %{name}-2015.02.11-leds-weak.patch
+Patch4:         %{name}-2015.02.11-show-boot-progress-weak.patch
 
 # We always need to use a cross compiler because we can't use hardfloat static
 # libraries. This means that we'll always produce an ARM package, even when
@@ -28,6 +33,11 @@ default boot.ini, and also configures grubby.
 
 %prep
 %setup -qn u-boot-%{commit}
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 dos2unix COPYING.txt
 chmod 644 COPYING.txt
 
