@@ -1,9 +1,9 @@
-%global commit d80b05d5624ecba99c15ee2a7b3f59ebf6f8f1e8
+%global commit fe2f831fd44a4071f58a42f260164544697aa666
 
 Name:           odroid-xu3-uboot
-Version:        2015.02.11
-Release:        2%{?dist}
-Summary:        U-boot for ODROID-XU3
+Version:        2015.11.04
+Release:        1%{?dist}
+Summary:        U-boot for ODROID-XU3/XU4
 
 Group:          System Environment/Base
 License:        GPLv2
@@ -16,6 +16,7 @@ Patch1:         %{name}-2015.02.11-gcc5.patch
 Patch2:         %{name}-2015.02.11-arm-asm-io-h-use-static-inline.patch
 Patch3:         %{name}-2015.02.11-leds-weak.patch
 Patch4:         %{name}-2015.02.11-show-boot-progress-weak.patch
+Patch5:         %{name}-2015.11.04-ext4load.patch
 
 # We always need to use a cross compiler because we can't use hardfloat static
 # libraries. This means that we'll always produce an ARM package, even when
@@ -28,7 +29,7 @@ BuildRequires:  dos2unix
 Requires:       grubby
 
 %description
-U-boot for Hardkernel's ODROID-XU3. This package installs u-boot.bin and a
+U-boot for Hardkernel's ODROID-XU3/XU4. This package installs u-boot.bin and a
 default boot.ini, and also configures grubby.
 
 %prep
@@ -38,6 +39,7 @@ default boot.ini, and also configures grubby.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 dos2unix COPYING.txt
 chmod 644 COPYING.txt
 
@@ -52,8 +54,6 @@ install -p -m0755 -D u-boot.bin %{buildroot}/boot/uboot/u-boot.bin
 
 ln -s grubby-%{version}-%{release} %{buildroot}%{_datadir}/%{name}/grubby
 
-touch %{buildroot}/boot/uboot/boot.scr
-
 %post
 cat %{_datadir}/%{name}/grubby-%{version}-%{release} >> %{_sysconfdir}/sysconfig/uboot
 
@@ -67,12 +67,16 @@ done < %{_datadir}/%{name}/grubby-%{version}-%{release}
 %{_datadir}/%{name}/grubby
 %{_datadir}/%{name}/grubby-%{version}-%{release}
 %config(noreplace) /boot/uboot/boot.ini
-%config(noreplace) /boot/uboot/boot.scr
 /boot/uboot/u-boot.bin
 
 %changelog
+* Sat Dec 26 2015 Scott K Logan <logans@cottsay.net> - 2015.11.04-1
+- Update to latest upstream
+- Remove boot.scr
+- Add patch for EXT4 support
+
 * Wed Sep 09 2015 Scott K Logan <logans@cottsay.net> - 2015.02.11-2
-- Update grubby config and boot.ini to store kerneland image in /boot
+- Update grubby config and boot.ini to store kernel and image in /boot
 
 * Thu Apr 09 2015 Scott K Logan <logans@cottsay.net> - 2015.02.11-1
 - Initial package
